@@ -20,8 +20,10 @@ private:
   double pret;
 
 public:
-  // constructori
-  Parfum() : idParfum(++PARFCONT) {
+  
+    // constructor fara parametrii
+
+  Parfum() : idParfum(PARFCONT++) {
     numeParfum = new char[strlen("anonim") + 1];
     strcpy(numeParfum, "anonim");
     brand = new char[strlen("anonim") + 1];
@@ -33,9 +35,12 @@ public:
     pret = 0;
   }
 
+
+  // constructor cu toti parametrii
+
   Parfum(char *numeParfum, char *brand, char rating, char *tipAroma,
          bool inStoc, double pret)
-      : idParfum(++PARFCONT), rating(rating), inStoc(inStoc), pret(pret) {
+      : idParfum(PARFCONT++), rating(rating), inStoc(inStoc), pret(pret) {
     this->numeParfum = new char[strlen(numeParfum) + 1];
     strcpy(this->numeParfum, numeParfum);
     this->brand = new char[strlen(brand) + 1];
@@ -44,8 +49,11 @@ public:
     strcpy(this->tipAroma, tipAroma);
   }
 
+
+  // constructori cu unii parametrii
+
   Parfum(char *numeParfum, bool inStoc, double pret)
-      : idParfum(++PARFCONT), inStoc(inStoc), pret(pret) {
+      : idParfum(PARFCONT++), inStoc(inStoc), pret(pret) {
     this->numeParfum = new char[strlen(numeParfum) + 1];
     strcpy(this->numeParfum, numeParfum);
     this->brand = new char[strlen("anonim") + 1];
@@ -66,7 +74,7 @@ public:
     this->tipAroma = new char[strlen(tipAroma) + 1];
     strcpy(this->tipAroma, tipAroma);
   }
-
+ // constructor de copiere
   Parfum(const Parfum &p)
       : idParfum(p.idParfum), rating(p.rating), inStoc(p.inStoc), pret(p.pret) {
     this->numeParfum = new char[strlen(p.numeParfum) + 1];
@@ -77,6 +85,7 @@ public:
     strcpy(this->tipAroma, p.tipAroma);
   }
 
+// destructor
   ~Parfum() {
     if (this->numeParfum != NULL)
       delete[] this->numeParfum;
@@ -153,7 +162,7 @@ public:
     }
   }
 
-  // supraincarcare operatori
+  // supraincarcare operator = pentru Parfum
   Parfum &operator=(const Parfum &obj) {
     if (this != &obj) {
 
@@ -208,6 +217,9 @@ public:
     }
   }
 
+  //supraincarcarea operatorilor ++ la stanga si dreapta pentru Parfum
+
+
   Parfum &operator++() /// pre-incrementare
   {
     this->pret++;
@@ -222,7 +234,7 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN DREAPTA
+  /// OPERATORUL +, * cu un char* in dreapta
   Parfum operator+(char *s) {
     Parfum copie = *this;
     strcat(copie.numeParfum, " ");
@@ -237,15 +249,18 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN STANGA
+  /// OPERATORUL +, * cu un char* in stanga
   friend Parfum operator+(char *s, Parfum obj);
   friend Parfum operator*(char *s, Parfum obj);
 
-  /// CAST
+  /// CAST char* pentru Parfum
   operator char *() // implicit
   {
     return this->numeParfum;
   }
+
+
+  //supraincarcarea operatorului >= si == pentru doua obiecte din Parfum
 
   bool operator>=(const Parfum &obj) {
     return idParfum >= obj.idParfum || this->pret >= obj.pret;
@@ -255,6 +270,8 @@ public:
     return idParfum == obj.idParfum && this->pret == obj.pret;
   }
 };
+
+//supraincarcarea la stanga a operatorilor +, * pentru Parfum
 
 Parfum operator*(char *s, Parfum obj) {
   strcat(obj.tipAroma, " ");
@@ -268,6 +285,8 @@ Parfum operator+(char *s, Parfum obj) {
   return obj;
 }
 
+//supraincarcarea operatorului << pentru Parfum
+
 ostream &operator<<(ostream &out, const Parfum &obj) {
   out << "ID Parfum: " << obj.idParfum << endl;
   out << "Nume Parfum: " << obj.numeParfum << endl;
@@ -276,8 +295,11 @@ ostream &operator<<(ostream &out, const Parfum &obj) {
   out << "Tip Aroma: " << obj.tipAroma << endl;
   out << "In Stoc: " << std::boolalpha << obj.inStoc << endl;
   out << "Pret: " << obj.pret << endl;
+  out << endl;
   return out;
 }
+
+//supraincarcarea operatorului >> pentru Parfum
 
 istream &operator>>(istream &in, Parfum &obj) {
   // id ul apare la crearea obiectului
@@ -333,8 +355,8 @@ private:
   float salariuLunar;
 
 public:
-  // constructori
-  Angajat() : idAngajat(++ANGCONT) {
+  // constructor fara parametrii
+  Angajat() : idAngajat(ANGCONT++) {
     nume = new char[strlen("anonim") + 1];
     strcpy(nume, "anonim");
     post = new char[strlen("anonim") + 1];
@@ -343,8 +365,10 @@ public:
     salariuLunar = 0;
   }
 
+   // constructor cu toti parametrii
+
   Angajat(char *nume, char *post, bool inActivitate, float salariuLunar)
-      : idAngajat(++ANGCONT), inActivitate(inActivitate),
+      : idAngajat(ANGCONT++), inActivitate(inActivitate),
         salariuLunar(salariuLunar) {
     this->nume = new char[strlen(nume) + 1];
     strcpy(this->nume, nume);
@@ -352,8 +376,9 @@ public:
     strcpy(this->post, post);
   }
 
+ // constructori cu cativa parametrii
   Angajat(char *nume, bool inActivitate, float salariuLunar)
-      : idAngajat(++ANGCONT), inActivitate(inActivitate),
+      : idAngajat(ANGCONT++), inActivitate(inActivitate),
         salariuLunar(salariuLunar) {
     this->nume = new char[strlen(nume) + 1];
     strcpy(this->nume, nume);
@@ -362,7 +387,7 @@ public:
   }
 
   Angajat(char *nume, bool inActivitate)
-      : idAngajat(++ANGCONT), inActivitate(inActivitate) {
+      : idAngajat(ANGCONT++), inActivitate(inActivitate) {
     this->nume = new char[strlen(nume) + 1];
     strcpy(this->nume, nume);
     post = new char[strlen("anonim") + 1];
@@ -370,7 +395,7 @@ public:
     salariuLunar = 0;
   }
 
-  Angajat(char *nume, char *post) : idAngajat(++ANGCONT) {
+  Angajat(char *nume, char *post) : idAngajat(ANGCONT++) {
     this->nume = new char[strlen(nume) + 1];
     strcpy(this->nume, nume);
     this->post = new char[strlen(post) + 1];
@@ -378,6 +403,7 @@ public:
     salariuLunar = 0;
   }
 
+ // constructor de copiere
   Angajat(const Angajat &a)
       : idAngajat(a.idAngajat), inActivitate(a.inActivitate),
         salariuLunar(a.salariuLunar) {
@@ -386,6 +412,8 @@ public:
     this->post = new char[strlen(a.post) + 1];
     strcpy(this->post, a.post);
   }
+
+// destructor
 
   ~Angajat() {
     if (this->nume != NULL)
@@ -424,8 +452,11 @@ public:
 
   float getSalariuLunar() { return salariuLunar; }
 
+  // functionalitate - estimarea salariului pentru angajatii activi peste un nr de luni, 
+// stiind cu cat creste salariul lunar
+
   float salariuEstimat(int nrLuni, float crestereLunara) {
-    if (inActivitate) {
+    if (this->inActivitate==true) {
       float salEstim = 0.0;
       float salCresc = this->salariuLunar;
 
@@ -440,7 +471,7 @@ public:
     return 0;
   }
 
-  // supraincarcare operatori
+  // supraincarcare operator = pentru Angajat
 
   Angajat &operator=(const Angajat &obj) {
     if (this != &obj) {
@@ -469,6 +500,8 @@ public:
               // - pt ca nu vrem ca friend sa modifice membrii private
   friend istream &operator>>(istream &, Angajat &);
 
+//supraincarcarea operatorului [] pentru angajat
+
   int operator[](int index) {
     switch (index) {
     case 0:
@@ -486,6 +519,8 @@ public:
     }
   }
 
+//supraincarcarea operatorilor ++ la stanga si dreapta pentru Angajat
+
   Angajat &operator++() /// pre-incrementare
   {
     this->salariuLunar += 100;
@@ -500,7 +535,7 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN DREAPTA
+  /// OPERATORUL +, * cu un int/char* in dreapta
   Angajat operator+(int sum) {
     Angajat copie = *this;
 
@@ -516,15 +551,17 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN STANGA
+  /// OPERATORUL +, * cu un int/char* in stanga
   friend Angajat operator+(int sum, Angajat a);
   friend Angajat operator*(char *s, Angajat a);
 
-  /// CAST
-  operator char *() // implicit
+  /// CAST la char* pentru Angajat
+  operator char*() // implicit
   {
     return this->nume;
   }
+
+  //supraincarcarea operatorului >= si == pentru doua obiecte din Angajat
 
   bool operator>=(const Angajat &obj) {
     return salariuLunar > obj.salariuLunar || idAngajat >= obj.idAngajat;
@@ -535,10 +572,14 @@ public:
   }
 };
 
+//supraincarcarea operatorului + pentru int la stanga
+
 Angajat operator+(int sum, Angajat a) {
   a.salariuLunar += sum;
   return a;
 }
+
+//supraincarcarea operatorului * pentru char* la stanga
 
 Angajat operator*(char *s, Angajat a) {
   strcat(a.nume, " ");
@@ -546,15 +587,22 @@ Angajat operator*(char *s, Angajat a) {
   return a;
 }
 
+//initializare variabila statica 
+
 int Angajat::ANGCONT = 0;
+
+//supraincarcarea operatorului << pentru angajat
 
 ostream &operator<<(ostream &out, const Angajat &obj) {
   out << "ID Angajat: " << obj.idAngajat << endl;
   out << "Nume: " << obj.nume << endl;
   out << "In Activitate: " << std::boolalpha << obj.inActivitate << endl;
   out << "Salariu: " << obj.salariuLunar << endl;
+  out << endl;
   return out;
 }
+
+//supraincarcarea operatorului >> pentru Angajat
 
 istream &operator>>(istream &in, Angajat &obj) {
   // id ul apare la crearea obiectului
@@ -581,7 +629,7 @@ istream &operator>>(istream &in, Angajat &obj) {
   in >> boolVal;
   obj.inActivitate = strcmp(boolVal, "da")==0;
 
-  cout << "SalariuLunar: ";
+  cout << "Salariu Lunar: ";
   in >> obj.salariuLunar;
 
   return in;
@@ -598,8 +646,8 @@ private:
   int *listaIdCumparaturi;
 
 public:
-  // constructori
-  Vanzare() : idVanzare(++VANZCONT) {
+  // constructor fara parametrii
+  Vanzare() : idVanzare(VANZCONT++) {
     idAngajat = 0;
     numeClient = new char[strlen("anonim") + 1];
     strcpy(numeClient, "anonim");
@@ -608,9 +656,11 @@ public:
     listaIdCumparaturi = new int[numarAchizitii];
   }
 
+  // constructor cu toti parametrii
+
   Vanzare(int idAngajat, char *numeClient, double sumaTotala,
           int numarAchizitii, int *listaIdCumparaturi)
-      : idVanzare(++VANZCONT), idAngajat(idAngajat), sumaTotala(sumaTotala),
+      : idVanzare(VANZCONT++), idAngajat(idAngajat), sumaTotala(sumaTotala),
         numarAchizitii(numarAchizitii) {
     this->numeClient = new char[strlen(numeClient) + 1];
     strcpy(this->numeClient, numeClient);
@@ -619,9 +669,11 @@ public:
       this->listaIdCumparaturi[i] = listaIdCumparaturi[i];
   }
 
+  // constructori cu unii parametrii
+
   Vanzare(int idAngajat, double sumaTotala, int numarAchizitii,
           int *listaIdCumparaturi)
-      : idVanzare(++VANZCONT), idAngajat(idAngajat), sumaTotala(sumaTotala),
+      : idVanzare(VANZCONT++), idAngajat(idAngajat), sumaTotala(sumaTotala),
         numarAchizitii(numarAchizitii) {
     this->numeClient = new char[strlen("anonim") + 1];
     strcpy(this->numeClient, "anonim");
@@ -632,7 +684,7 @@ public:
 
   Vanzare(int idAngajat, char *numeClient, int numarAchizitii,
           int *listaIdCumparaturi)
-      : idVanzare(++VANZCONT), idAngajat(idAngajat),
+      : idVanzare(VANZCONT++), idAngajat(idAngajat),
         numarAchizitii(numarAchizitii) {
     this->numeClient = new char[strlen(numeClient) + 1];
     strcpy(this->numeClient, numeClient);
@@ -641,6 +693,8 @@ public:
     for (int i = 0; i < numarAchizitii; i++)
       this->listaIdCumparaturi[i] = listaIdCumparaturi[i];
   }
+
+    // constructor de copiere
 
   Vanzare(const Vanzare &a)
       : idVanzare(a.idVanzare), idAngajat(a.idAngajat),
@@ -651,6 +705,8 @@ public:
     for (int i = 0; i < numarAchizitii; i++)
       this->listaIdCumparaturi[i] = a.listaIdCumparaturi[i];
   }
+
+  //destructor
 
   ~Vanzare() {
     if (this->numeClient != NULL)
@@ -698,18 +754,19 @@ public:
   parfumCumparat(vector<Parfum> parfumes) // verifica daca parfumurile dintr o
                                           // lista au fost comparate
   {
-    for (int i = 0; i < numarAchizitii; i++) {
-      bool peLista = false;
-      for (auto parfume : parfumes)
+    bool peLista = false;
+    for (auto parfume : parfumes){
+      peLista = false;
+      for (int i = 0; i < numarAchizitii; i++) 
         if (parfume.getIdParfum() == listaIdCumparaturi[i])
           peLista = true;
-      if (!peLista)
-        return false;
+      if(!peLista)
+       return false;
     }
-    return true;
+    return peLista;
   }
 
-  // supraincarcare operatori
+  // supraincarcare operator = pentru Vanzare
 
   Vanzare &operator=(const Vanzare &obj) {
     if (this != &obj) {
@@ -742,12 +799,17 @@ public:
               // - pt ca nu vrem ca friend sa modifice membrii private
   friend istream &operator>>(istream &, Vanzare &);
 
+ //supraincarcarea operatorului [] pentru Vanzare
+
   int operator[](int index) {
     if (index >= 0 && index < numarAchizitii)
       return this->listaIdCumparaturi[index];
     else
       throw runtime_error("Index invalid");
   }
+
+  //supraincarcarea operatorilor -- la stanga si dreapta pentru Vanzare
+
 
   Vanzare &operator--() /// pre-incrementare
   {
@@ -786,7 +848,7 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN DREAPTA
+  /// OPERATORUL +, * cu un int in dreapta
   Vanzare operator+(int numarAchiz) {
     Vanzare copie = *this;
 
@@ -801,25 +863,27 @@ public:
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN STANGA
+  /// OPERATORUL +, * cu un int in stanga
   friend Vanzare operator+(int nr, Vanzare v);
   friend Vanzare operator*(int sum, Vanzare v);
 
-  // op + pt obj din Angajat
+  // supraincarcare + pt obj din Angajat la dreapta celor din Vanzare
 
   int operator+(Angajat a) {
     return (idAngajat == a.getIdAngajat()) ? idAngajat : 0;
   }
 
-  // op + pt obj din Vanzare
+  // supraincarcar + pt obj din Vanzare, la stanga obj din Angajat 
 
   friend int operator+(Angajat, Vanzare);
 
-  /// CAST
+  /// CAST la bool pentru Vanzare
   operator char *() // implicit
   {
     return this->numeClient;
   }
+
+  //supraincarcarea operatorului >= si == pentru doua obiecte din Vanzare
 
   bool operator>=(const Vanzare &obj) {
     return sumaTotala > obj.sumaTotala || sumaTotala >= obj.sumaTotala;
@@ -830,9 +894,13 @@ public:
   }
 };
 
+//supraincarcarea la stanga a operatorului + pentru un obiect din Vanzare si un obiect din Angajat
+
 int operator+(Angajat a, Vanzare v) {
   return a.getIdAngajat() != v.getIdAngajat() ? 0 : v.getIdAngajat();
 }
+
+//supraincarcarea la stanga a operatorilor +, * pentru Vanzare
 
 Vanzare operator*(int sum, Vanzare v) {
   v.numarAchizitii *= sum;
@@ -843,6 +911,7 @@ Vanzare operator+(int nr, Vanzare v) {
   v.numarAchizitii += nr;
   return v;
 }
+//supraincarcarea operatorului << pentru Vanzare
 
 ostream &operator<<(ostream &out, const Vanzare &obj) {
   out << "ID Vanzare: " << obj.idVanzare << endl;
@@ -854,9 +923,11 @@ ostream &operator<<(ostream &out, const Vanzare &obj) {
 
   for (int i = 0; i < obj.numarAchizitii; i++)
     out << obj.listaIdCumparaturi[i] << " ";
-
+  out << endl;
   return out;
 }
+
+//supraincarcarea operatorului >> pentru Vanzare
 
 istream &operator>>(istream &in, Vanzare &obj) {
   // id ul apare la crearea obiectului
@@ -869,6 +940,10 @@ istream &operator>>(istream &in, Vanzare &obj) {
   in.getline(nume, 100);
   if (obj.numeClient != NULL)
     delete[] obj.numeClient;
+
+  if (obj.listaIdCumparaturi != NULL)
+    delete[] obj.listaIdCumparaturi;
+
   obj.numeClient = new char[strlen(nume) + 1];
   strcpy(obj.numeClient, nume);
 
@@ -885,6 +960,8 @@ istream &operator>>(istream &in, Vanzare &obj) {
   return in;
 }
 
+// initalizare variabila statica
+
 int Vanzare::VANZCONT = 0;
 
 class InventarMagazin {
@@ -896,7 +973,7 @@ private:
   float profitTotal;
 
 public:
-  // constructori
+  // constructor fara parametrii
   InventarMagazin() {
     numarTipParfumuri = 0;
     listaIdParfumuri = new int[numarTipParfumuri];
@@ -905,6 +982,7 @@ public:
     profitTotal = 0.0;
   }
 
+ // constructor cu toti parametrii
   InventarMagazin(int numarParfumuri, int *listaIdParfumuri, int *bucatiInStoc,
                   bool perioadaPromotie, float profit)
       : numarTipParfumuri(numarParfumuri), perioadaPromotie(perioadaPromotie),
@@ -918,6 +996,8 @@ public:
     for (int i = 0; i < numarTipParfumuri; ++i)
       this->bucatiInStoc[i] = bucatiInStoc[i];
   }
+
+   // constructori cu cativa parametrii
 
   InventarMagazin(int numarParfumuri, int *listaIdParfumuri, int *bucatiInStoc,
                   float profit)
@@ -949,6 +1029,8 @@ public:
       this->bucatiInStoc[i] = bucatiInStoc[i];
   }
 
+   // constructor de copiere
+
   InventarMagazin(const InventarMagazin &obj)
       : numarTipParfumuri(obj.numarTipParfumuri),
         perioadaPromotie(obj.perioadaPromotie), profitTotal(obj.profitTotal) {
@@ -964,7 +1046,7 @@ public:
   // destructor
   ~InventarMagazin() {
     if (this->listaIdParfumuri != NULL)
-      delete[] this->bucatiInStoc;
+      delete[] this->listaIdParfumuri;
     if (this->bucatiInStoc != NULL)
       delete[] this->bucatiInStoc;
   }
@@ -1021,7 +1103,7 @@ public:
     return 0;
   }
 
-  // supraincarcare operatori
+ //supraincarcarea operatorilor = pentru InventarMagazin
 
   InventarMagazin &operator=(const InventarMagazin &obj) {
     if (this != &obj) {
@@ -1056,12 +1138,16 @@ public:
                      // - pt ca nu vrem ca friend sa modifice membrii private
   friend istream &operator>>(istream &, InventarMagazin &);
 
+ //supraincarcarea operatorului [] pentru InventarMagazin
+ 
   int operator[](int index) {
     if (index >= 0 && index < numarTipParfumuri)
       return this->listaIdParfumuri[index];
     else
       throw runtime_error("Index invalid");
   }
+
+  //supraincarcarea operatorilor -- la stanga si dreapta pentru InventarMagazin
 
   InventarMagazin &operator--() /// pre-incrementare
   {
@@ -1072,44 +1158,27 @@ public:
     return *this;
   }
 
-  InventarMagazin operator--(int) /// post-incrementare, mics de pret/nr prod
+  InventarMagazin operator--(int) /// post-incrementare, micsorare de pret/nr produse
   {
-    InventarMagazin copie = *this; // this e pointer, * sa fie obiect
+    InventarMagazin copie = *this; // this e pointer pentru ca * sa fie obiect
     for (int i = 0; i < numarTipParfumuri; i++)
       if (copie.bucatiInStoc[i] > 0)
         copie.bucatiInStoc[i]--;
     return copie;
   }
 
-  /// OPERATORUL +, * cu obiect din alta clasa IN DREAPTA
-  InventarMagazin operator+(InventarMagazin obj) {
-    InventarMagazin copie = *this;
 
-    for (int i = 0; i < this->numarTipParfumuri; i++)
-      copie.bucatiInStoc[i] += obj.bucatiInStoc[i];
-
-    return copie;
-  }
-
-  InventarMagazin operator*(InventarMagazin obj) {
-    InventarMagazin copie = *this;
-
-    for (int i = 0; i < this->numarTipParfumuri; i++)
-      copie.bucatiInStoc[i] *= obj.bucatiInStoc[i];
-
-    return copie;
-  }
-
-  /// OPERATORUL +, * cu obiect din alta clasa IN STANGA
+  /// OPERATORUL +, * doua obiecte de tip InventarMagazin
   friend InventarMagazin operator+(InventarMagazin, InventarMagazin);
   friend InventarMagazin operator*(InventarMagazin, InventarMagazin);
 
-  /// CAST
+  /// CAST la float pentru InventarMagazin
   operator float() // implicit
   {
     return this->profitTotal;
   }
 
+  //supraincarcarea operatorului < si == pentru doua obiecte din InventarMagazin
   bool operator<(const InventarMagazin &obj) {
     return profitTotal < obj.profitTotal;
   }
@@ -1119,12 +1188,17 @@ public:
   }
 };
 
+//supraincarcarea operatorului * pentru doua obiecte din InventarMagazin
+
 InventarMagazin operator*(InventarMagazin obj1, InventarMagazin obj2) {
   for (int i = 0; i < obj1.numarTipParfumuri; i++)
     obj1.bucatiInStoc[i] *= obj2.bucatiInStoc[i];
 
   return obj1;
 }
+
+//supraincarcarea operatorului + pentru doua obiecte din InventarMagazin
+
 
 InventarMagazin operator+(InventarMagazin obj1, InventarMagazin obj2) {
   for (int i = 0; i < obj1.numarTipParfumuri; i++)
@@ -1133,17 +1207,22 @@ InventarMagazin operator+(InventarMagazin obj1, InventarMagazin obj2) {
   return obj1;
 }
 
+//supraincarcarea operatorului << pentru InventarMagazin
+
 ostream &operator<<(ostream &out, const InventarMagazin &obj) {
   out << "Numar Parfumuri: " << obj.numarTipParfumuri << endl;
   out << "Perioada Promotie: " << obj.perioadaPromotie << endl;
   out << "Total Profit: " << obj.profitTotal << endl;
-  out << "Lista ID Parfumuri si daca sunt in stoc: " << endl;
+  out << "Lista ID Parfumuri si bucati in stoc: " << endl;
 
   for (int i = 0; i < obj.numarTipParfumuri; i++)
-    out << obj.listaIdParfumuri[i] << " " << obj.bucatiInStoc[i];
-
+    out << obj.listaIdParfumuri[i] << " " << obj.bucatiInStoc[i] << endl;
+  
+  out << endl;
   return out;
 }
+
+//supraincarcarea operatorului >> pentru InventarMagazin
 
 istream &operator>>(istream &in, InventarMagazin &obj) {
   cout << "Numar Parfumuri: ";
@@ -1151,13 +1230,20 @@ istream &operator>>(istream &in, InventarMagazin &obj) {
   cout << "Perioada Promotie: ";
   
   char boolVal[2];
-  cin >> boolVal;
+  in >> boolVal;
   obj.perioadaPromotie = strcmp(boolVal, "da")==0;
   cout << "Total Profit: ";
   in >> obj.profitTotal;
 
-  cout << "ID Parfumuri si bucati in stoc: " << endl;
+  if (obj.bucatiInStoc != NULL)
+    delete[] obj.bucatiInStoc;
+  if (obj.listaIdParfumuri != NULL)
+    delete[] obj.listaIdParfumuri;
+
+  cout << "Lista ID Parfumuri bucati in stoc: " << endl;
   obj.listaIdParfumuri = new int[obj.numarTipParfumuri];
+  obj.bucatiInStoc = new int[obj.numarTipParfumuri];
+
   for (int i = 0; i < obj.numarTipParfumuri; i++)
     in >> obj.listaIdParfumuri[i] >> obj.bucatiInStoc[i];
 
@@ -1165,19 +1251,27 @@ istream &operator>>(istream &in, InventarMagazin &obj) {
 }
 
 int main() {
+
   vector<Parfum> parfumuri;
   vector<Angajat> angajati;
   vector<Vanzare> vanzari;
   vector<InventarMagazin> inventare;
-
-  while (true) {
+   
+   bool inMeniu = true;
+ // meniul interactiv pentru functionalitati de baza si functia specifica fiecarei clase
+  while (inMeniu) {
     int comanda;
-    cout << "Bine ati venit! Alegeti optiuni: \n 1: Creare - 2: Read - 3: Update - 4: Delete - 5: Apel functii \n";
+    cout << "Bine ati venit! Alegeti optiuni: \n 1: Creare - 2: Read - 3: Update - 4: Delete - 5: Apel functii \n 6: Inapoi la meniu - 7: Quit \n";
     cin >> comanda;
     switch (comanda) {
+    case 6: 
+     break;
+    case 7:
+     inMeniu = false;
+     break;
     case 1: {
       int alegere = 0;
-      cout << "Alegeti optiuni: \n 1: Creare parfum, 2: Creare Angajat, 3: Creare Vanzare, 4: Creare Inventar \n";
+      cout << "Alegeti optiuni: \n 1: Creare parfum, 2: Creare Angajat, 3: Creare Vanzare, 4: Creare Inventar \n 5: Inapoi la meniu - 6: Quit \n";
       cin >> alegere;
       switch (alegere) {
       case 1: {
@@ -1204,6 +1298,13 @@ int main() {
         inventare.push_back(i);
         break;
       }
+      case 5: {
+        break;
+      }
+      case 6: {
+       inMeniu = false;
+       break;
+      }
       default:
         break;
       }
@@ -1211,11 +1312,9 @@ int main() {
       break;
     }
     case 2: {
-      int alegere = 0, index;
-      cout << "Read optiuni: \n 1: Read Parfumuri, 2: Read Angajati, 3: Read Vanzari, 4: Read Inventare \n";
+      int alegere = 0;
+      cout << "Read optiuni: \n 1: Read Parfumuri, 2: Read Angajati, 3: Read Vanzari, 4: Read Inventare \n 5: Inapoi la meniu - 6: Quit \n";
       cin >> alegere;
-      cout << "Introduceti index: \n";
-      cin >> index;
       switch (alegere) {
       case 1: {
         for(auto parfum:parfumuri)
@@ -1237,6 +1336,13 @@ int main() {
          cout << inventar;
         break;
       }
+      case 5: {
+        break;
+      }
+      case 6: {
+       inMeniu = false;
+       break;
+      }
       default:
         break;
       }
@@ -1245,10 +1351,12 @@ int main() {
     }
     case 3: {
       int alegere = 0, index;
-      cout << "Update optiuni: \n 1: Update parfum, 2: Update Angajat, 3: Update Vanzare, 4: Update Inventar \n";
+      cout << "Update optiuni: \n 1: Update parfum, 2: Update Angajat, 3: Update Vanzare, 4: Update Inventar \n 5: Inapoi la meniu - 6: Quit \n";
       cin >> alegere;
-      cout << "Introduceti index: \n";
-      cin >> index;
+      if(alegere<5)
+      { cout << "Introduceti index: \n";
+        cin >> index;
+      }
       switch (alegere) {
       case 1: {
         Parfum p;
@@ -1274,6 +1382,13 @@ int main() {
         inventare[index] = i;
         break;
       }
+      case 5: {
+        break;
+      }
+      case 6: {
+       inMeniu = false;
+       break;
+      }
       default:
         break;
       }
@@ -1282,10 +1397,12 @@ int main() {
     }
     case 4: {
       int alegere = 0, index;
-      cout << "Delete optiuni: \n 1: Delete parfum, 2: Delete Angajat, 3: Delete Vanzare, 4: Delete Inventar \n";
+      cout << "Delete optiuni: \n 1: Delete parfum, 2: Delete Angajat, 3: Delete Vanzare, 4: Delete Inventar \n 5: Inapoi la meniu - 6: Quit \n";
       cin >> alegere;
-      cout << "Introduceti index: \n";
-      cin >> index;
+      if(alegere<5)
+      { cout << "Introduceti index: \n";
+        cin >> index;
+      }
       switch (alegere) {
       case 1: {
         parfumuri.erase(parfumuri.begin() + index);
@@ -1300,9 +1417,15 @@ int main() {
         break;
       }
       case 4: {
-        //  delete inventare[index];
         inventare.erase(inventare.begin() + index);
         break;
+      }
+      case 5: {
+        break;
+      }
+      case 6: {
+       inMeniu = false;
+       break;
       }
       default:
         break;
@@ -1311,17 +1434,15 @@ int main() {
       break;
     }
      case 5: {
-      int alegere = 0, index;
-      cout << "Functii: \n 1: Cand avem parfumuri in stoc , 2: Estimare salarii, 3: Ce parfumuri contine fiecare vanzare, 4: Cate parfumuri am in fiecare inventar \n";
+      int alegere = 0;
+      cout << "Functii: \n 1: Cand avem parfumuri in stoc, 2: Estimare salarii, 3: Ce parfumuri contine fiecare vanzare, 4: Cate parfumuri am in fiecare inventar \n 5: Inapoi la meniu - 6: Quit \n";
       cin >> alegere;
-      cout << "Introduceti index: \n";
-      cin >> index;
       switch (alegere) {
       case 1: {
         for(auto p:parfumuri)
         {
            cout << p.getNumeParfum() << " ";
-           p.isInStoc();
+           p.perioadaDeVarf();
            cout << endl;
         }
         break;
@@ -1329,10 +1450,12 @@ int main() {
       case 2: {
         for(auto a:angajati)
         {
-            int nrLuni, crestere;
+            int nrLuni;
+            float crestere;
             cout << "Introduceti numarul de luni si cresterea pe luna a salariului: \n";
             cin >> nrLuni >> crestere;
-            cout << "Salariu estimat: " << a.salariuEstimat(nrLuni, crestere);
+            cout << a.getNume() << " ";
+            cout << "Salariu estimat: " << a.salariuEstimat(nrLuni, crestere) << endl;
        
         }
         break;
@@ -1342,6 +1465,7 @@ int main() {
         {
             int nrParfumuri, poz;
             vector <Parfum> p2;
+            cout << "Vanzare: " << v.getIdVanzare() << endl;
             cout << "Introduceti cate parfumuri se cauta si indexurile parfumurilr de cautat: \n";
             cin >> nrParfumuri;
             for(int i=0; i<nrParfumuri; i++)
@@ -1350,7 +1474,11 @@ int main() {
                 p2.push_back(parfumuri[poz]);
             }
 
-            cout << "Vanzare " << v.getIdVanzare() << ": parufumurile " << (v.parfumCumparat(p2)==true)? "sunt pe bon": "nu sunt pe bon";
+            cout << "Vanzare " << v.getIdVanzare() << ": parufumurile "; 
+            if(v.parfumCumparat(p2)==true)
+             cout << "sunt pe bon";
+            else 
+             cout <<" nu sunt pe bon";
             cout << endl;
         }
         break;
@@ -1358,8 +1486,15 @@ int main() {
       case 4: {
         for(auto i:inventare)
            for(auto p:parfumuri)
-             cout <<"Parfumul " << p.getNumeParfum() << " are " << i.bucatiInventar(p) << " in inventarul curent";
+             cout <<"Parfumul " << p.getNumeParfum() << " apare de " << i.bucatiInventar(p) << " ori in inventarul curent" << endl;
         break;
+      }
+      case 5: {
+        break;
+      }
+      case 6: {
+       inMeniu = false;
+       break;
       }
       default:
         break;
@@ -1373,4 +1508,5 @@ int main() {
   return 0;
 }
 
+// SALARIULUNAR
 // ma uit peste functii
