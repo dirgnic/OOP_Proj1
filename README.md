@@ -1,4 +1,4 @@
-### README for the OOP Project: "Perfume Store Inventory Management System"
+OOP Project: "Perfume Store Inventory Management System"
 
 #### Project Overview
 This project is a C++ application as homework for my OOP class. It is designed to simulate an inventory management system for a perfume store. The program allows users to manage perfumes, employees, sales, and store inventory through various functionalities such as creating, reading, updating, and deleting records. It also includes additional features like estimating employee salaries, tracking inventory stock, and determining the sales status of perfumes.
